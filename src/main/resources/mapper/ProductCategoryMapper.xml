@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.ProductCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.ProductCategory" >
+    <id column="pc_id" property="pcId" jdbcType="INTEGER" />
+    <result column="pc_name" property="pcName" jdbcType="VARCHAR" />
+    <result column="pc_parentid" property="pcParentid" jdbcType="INTEGER" />
+    <result column="pc_createtime" property="pcCreatetime" jdbcType="TIMESTAMP" />
+    <result column="pc_updatetime" property="pcUpdatetime" jdbcType="DECIMAL" />
+    <result column="pc_remark" property="pcRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pc_id, pc_name, pc_parentid, pc_createtime, pc_updatetime, pc_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_product_category
+    where pc_id = #{pcId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_product_category
+    where pc_id = #{pcId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.ProductCategory" >
+    insert into i_product_category (pc_id, pc_name, pc_parentid, 
+      pc_createtime, pc_updatetime, pc_remark
+      )
+    values (#{pcId,jdbcType=INTEGER}, #{pcName,jdbcType=VARCHAR}, #{pcParentid,jdbcType=INTEGER}, 
+      #{pcCreatetime,jdbcType=TIMESTAMP}, #{pcUpdatetime,jdbcType=DECIMAL}, #{pcRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.ProductCategory" >
+    insert into i_product_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pcId != null" >
+        pc_id,
+      </if>
+      <if test="pcName != null" >
+        pc_name,
+      </if>
+      <if test="pcParentid != null" >
+        pc_parentid,
+      </if>
+      <if test="pcCreatetime != null" >
+        pc_createtime,
+      </if>
+      <if test="pcUpdatetime != null" >
+        pc_updatetime,
+      </if>
+      <if test="pcRemark != null" >
+        pc_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pcId != null" >
+        #{pcId,jdbcType=INTEGER},
+      </if>
+      <if test="pcName != null" >
+        #{pcName,jdbcType=VARCHAR},
+      </if>
+      <if test="pcParentid != null" >
+        #{pcParentid,jdbcType=INTEGER},
+      </if>
+      <if test="pcCreatetime != null" >
+        #{pcCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcUpdatetime != null" >
+        #{pcUpdatetime,jdbcType=DECIMAL},
+      </if>
+      <if test="pcRemark != null" >
+        #{pcRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.ProductCategory" >
+    update i_product_category
+    <set >
+      <if test="pcName != null" >
+        pc_name = #{pcName,jdbcType=VARCHAR},
+      </if>
+      <if test="pcParentid != null" >
+        pc_parentid = #{pcParentid,jdbcType=INTEGER},
+      </if>
+      <if test="pcCreatetime != null" >
+        pc_createtime = #{pcCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcUpdatetime != null" >
+        pc_updatetime = #{pcUpdatetime,jdbcType=DECIMAL},
+      </if>
+      <if test="pcRemark != null" >
+        pc_remark = #{pcRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pc_id = #{pcId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.ProductCategory" >
+    update i_product_category
+    set pc_name = #{pcName,jdbcType=VARCHAR},
+      pc_parentid = #{pcParentid,jdbcType=INTEGER},
+      pc_createtime = #{pcCreatetime,jdbcType=TIMESTAMP},
+      pc_updatetime = #{pcUpdatetime,jdbcType=DECIMAL},
+      pc_remark = #{pcRemark,jdbcType=VARCHAR}
+    where pc_id = #{pcId,jdbcType=INTEGER}
+  </update>
+</mapper>

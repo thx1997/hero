@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.ProductUnitMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.ProductUnit" >
+    <id column="pu_id" property="puId" jdbcType="INTEGER" />
+    <result column="pu_name" property="puName" jdbcType="VARCHAR" />
+    <result column="pu_type" property="puType" jdbcType="VARCHAR" />
+    <result column="pu_remark" property="puRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pu_id, pu_name, pu_type, pu_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_product_unit
+    where pu_id = #{puId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_product_unit
+    where pu_id = #{puId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.ProductUnit" >
+    insert into i_product_unit (pu_id, pu_name, pu_type, 
+      pu_remark)
+    values (#{puId,jdbcType=INTEGER}, #{puName,jdbcType=VARCHAR}, #{puType,jdbcType=VARCHAR}, 
+      #{puRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.ProductUnit" >
+    insert into i_product_unit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="puId != null" >
+        pu_id,
+      </if>
+      <if test="puName != null" >
+        pu_name,
+      </if>
+      <if test="puType != null" >
+        pu_type,
+      </if>
+      <if test="puRemark != null" >
+        pu_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="puId != null" >
+        #{puId,jdbcType=INTEGER},
+      </if>
+      <if test="puName != null" >
+        #{puName,jdbcType=VARCHAR},
+      </if>
+      <if test="puType != null" >
+        #{puType,jdbcType=VARCHAR},
+      </if>
+      <if test="puRemark != null" >
+        #{puRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.ProductUnit" >
+    update i_product_unit
+    <set >
+      <if test="puName != null" >
+        pu_name = #{puName,jdbcType=VARCHAR},
+      </if>
+      <if test="puType != null" >
+        pu_type = #{puType,jdbcType=VARCHAR},
+      </if>
+      <if test="puRemark != null" >
+        pu_remark = #{puRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pu_id = #{puId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.ProductUnit" >
+    update i_product_unit
+    set pu_name = #{puName,jdbcType=VARCHAR},
+      pu_type = #{puType,jdbcType=VARCHAR},
+      pu_remark = #{puRemark,jdbcType=VARCHAR}
+    where pu_id = #{puId,jdbcType=INTEGER}
+  </update>
+</mapper>

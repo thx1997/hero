@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.PurchaseNoteMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.PurchaseNote" >
+    <id column="pn_id" property="pnId" jdbcType="VARCHAR" />
+    <result column="pn_createtime" property="pnCreatetime" jdbcType="TIMESTAMP" />
+    <result column="pn_e_id" property="pnEId" jdbcType="INTEGER" />
+    <result column="pn_status" property="pnStatus" jdbcType="INTEGER" />
+    <result column="pn_accountantid" property="pnAccountantid" jdbcType="INTEGER" />
+    <result column="pn_warehousepersonid" property="pnWarehousepersonid" jdbcType="INTEGER" />
+    <result column="pn_totalmoney" property="pnTotalmoney" jdbcType="DECIMAL" />
+    <result column="pn_remark" property="pnRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pn_id, pn_createtime, pn_e_id, pn_status, pn_accountantid, pn_warehousepersonid, 
+    pn_totalmoney, pn_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_purchasenote
+    where pn_id = #{pnId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from i_purchasenote
+    where pn_id = #{pnId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.PurchaseNote" >
+    insert into i_purchasenote (pn_id, pn_createtime, pn_e_id, 
+      pn_status, pn_accountantid, pn_warehousepersonid, 
+      pn_totalmoney, pn_remark)
+    values (#{pnId,jdbcType=VARCHAR}, #{pnCreatetime,jdbcType=TIMESTAMP}, #{pnEId,jdbcType=INTEGER}, 
+      #{pnStatus,jdbcType=INTEGER}, #{pnAccountantid,jdbcType=INTEGER}, #{pnWarehousepersonid,jdbcType=INTEGER}, 
+      #{pnTotalmoney,jdbcType=DECIMAL}, #{pnRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.PurchaseNote" >
+    insert into i_purchasenote
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pnId != null" >
+        pn_id,
+      </if>
+      <if test="pnCreatetime != null" >
+        pn_createtime,
+      </if>
+      <if test="pnEId != null" >
+        pn_e_id,
+      </if>
+      <if test="pnStatus != null" >
+        pn_status,
+      </if>
+      <if test="pnAccountantid != null" >
+        pn_accountantid,
+      </if>
+      <if test="pnWarehousepersonid != null" >
+        pn_warehousepersonid,
+      </if>
+      <if test="pnTotalmoney != null" >
+        pn_totalmoney,
+      </if>
+      <if test="pnRemark != null" >
+        pn_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pnId != null" >
+        #{pnId,jdbcType=VARCHAR},
+      </if>
+      <if test="pnCreatetime != null" >
+        #{pnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pnEId != null" >
+        #{pnEId,jdbcType=INTEGER},
+      </if>
+      <if test="pnStatus != null" >
+        #{pnStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pnAccountantid != null" >
+        #{pnAccountantid,jdbcType=INTEGER},
+      </if>
+      <if test="pnWarehousepersonid != null" >
+        #{pnWarehousepersonid,jdbcType=INTEGER},
+      </if>
+      <if test="pnTotalmoney != null" >
+        #{pnTotalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="pnRemark != null" >
+        #{pnRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.PurchaseNote" >
+    update i_purchasenote
+    <set >
+      <if test="pnCreatetime != null" >
+        pn_createtime = #{pnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pnEId != null" >
+        pn_e_id = #{pnEId,jdbcType=INTEGER},
+      </if>
+      <if test="pnStatus != null" >
+        pn_status = #{pnStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pnAccountantid != null" >
+        pn_accountantid = #{pnAccountantid,jdbcType=INTEGER},
+      </if>
+      <if test="pnWarehousepersonid != null" >
+        pn_warehousepersonid = #{pnWarehousepersonid,jdbcType=INTEGER},
+      </if>
+      <if test="pnTotalmoney != null" >
+        pn_totalmoney = #{pnTotalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="pnRemark != null" >
+        pn_remark = #{pnRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pn_id = #{pnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.PurchaseNote" >
+    update i_purchasenote
+    set pn_createtime = #{pnCreatetime,jdbcType=TIMESTAMP},
+      pn_e_id = #{pnEId,jdbcType=INTEGER},
+      pn_status = #{pnStatus,jdbcType=INTEGER},
+      pn_accountantid = #{pnAccountantid,jdbcType=INTEGER},
+      pn_warehousepersonid = #{pnWarehousepersonid,jdbcType=INTEGER},
+      pn_totalmoney = #{pnTotalmoney,jdbcType=DECIMAL},
+      pn_remark = #{pnRemark,jdbcType=VARCHAR}
+    where pn_id = #{pnId,jdbcType=VARCHAR}
+  </update>
+</mapper>

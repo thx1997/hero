@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.Permission" >
+    <id column="per_id" property="perId" jdbcType="INTEGER" />
+    <result column="per_value" property="perValue" jdbcType="VARCHAR" />
+    <result column="per_moule" property="perMoule" jdbcType="VARCHAR" />
+    <result column="per_name" property="perName" jdbcType="VARCHAR" />
+    <result column="per_createtime" property="perCreatetime" jdbcType="TIMESTAMP" />
+    <result column="per_updatetime" property="perUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="per_remark" property="perRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    per_id, per_value, per_moule, per_name, per_createtime, per_updatetime, per_remark
+  </sql>
+  <!-- 根据角色Ids 查询出权限Ids(thx) -->
+  <select id="queryPermissionIdsByRoleIds" parameterType="list"
+		resultType="int">
+		SELECT rper_per_id FROM i_role_permission
+		<where>
+		<if test=" roleIds != null ">
+		  rper_r_id IN 
+		<foreach item="id" collection="roleIds" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		</if>
+		</where>		
+	</select>
+	<!-- 查询所有权限操作 (thx)-->
+  <select id="queryNode" resultMap="permissionNodeMap">
+	SELECT * FROM i_permission
+	</select>
+	<!--角色权限关系表与Node实体的映射(thx)  -->
+	<resultMap type="com.hero.entity.Node" id="permissionNodeMap">	
+	    <result property="text" column="per_moule"/>	
+		<collection property="children" ofType="com.hero.entity.Node">		
+			<id property="id" column="per_id" />			
+			<result property="text" column="per_name" />
+		</collection>			
+	</resultMap>
+	
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_permission
+    where per_id = #{perId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_permission
+    where per_id = #{perId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.Permission" >
+    insert into i_permission (per_id, per_value, per_moule, 
+      per_name, per_createtime, per_updatetime, 
+      per_remark)
+    values (#{perId,jdbcType=INTEGER}, #{perValue,jdbcType=VARCHAR}, #{perMoule,jdbcType=VARCHAR}, 
+      #{perName,jdbcType=VARCHAR}, #{perCreatetime,jdbcType=TIMESTAMP}, #{perUpdatetime,jdbcType=TIMESTAMP}, 
+      #{perRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.Permission" >
+    insert into i_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="perId != null" >
+        per_id,
+      </if>
+      <if test="perValue != null" >
+        per_value,
+      </if>
+      <if test="perMoule != null" >
+        per_moule,
+      </if>
+      <if test="perName != null" >
+        per_name,
+      </if>
+      <if test="perCreatetime != null" >
+        per_createtime,
+      </if>
+      <if test="perUpdatetime != null" >
+        per_updatetime,
+      </if>
+      <if test="perRemark != null" >
+        per_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="perId != null" >
+        #{perId,jdbcType=INTEGER},
+      </if>
+      <if test="perValue != null" >
+        #{perValue,jdbcType=VARCHAR},
+      </if>
+      <if test="perMoule != null" >
+        #{perMoule,jdbcType=VARCHAR},
+      </if>
+      <if test="perName != null" >
+        #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="perCreatetime != null" >
+        #{perCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="perUpdatetime != null" >
+        #{perUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="perRemark != null" >
+        #{perRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.Permission" >
+    update i_permission
+    <set >
+      <if test="perValue != null" >
+        per_value = #{perValue,jdbcType=VARCHAR},
+      </if>
+      <if test="perMoule != null" >
+        per_moule = #{perMoule,jdbcType=VARCHAR},
+      </if>
+      <if test="perName != null" >
+        per_name = #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="perCreatetime != null" >
+        per_createtime = #{perCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="perUpdatetime != null" >
+        per_updatetime = #{perUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="perRemark != null" >
+        per_remark = #{perRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where per_id = #{perId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.Permission" >
+    update i_permission
+    set per_value = #{perValue,jdbcType=VARCHAR},
+      per_moule = #{perMoule,jdbcType=VARCHAR},
+      per_name = #{perName,jdbcType=VARCHAR},
+      per_createtime = #{perCreatetime,jdbcType=TIMESTAMP},
+      per_updatetime = #{perUpdatetime,jdbcType=TIMESTAMP},
+      per_remark = #{perRemark,jdbcType=VARCHAR}
+    where per_id = #{perId,jdbcType=INTEGER}
+  </update>
+   <!--查询用户所拥有的权限-->
+  <select id="getPermissionValueByEid" resultType="String" parameterType="int">
+  		SELECT per_value FROM i_permission WHERE per_id IN
+  		(SELECT rper_per_id FROM i_role_permission WHERE rper_r_id IN
+		(SELECT re_r_id FROM i_role_employee WHERE re_e_id = #{eid}))
+  </select>
+  
+  
+  
+  <!-- 查询所有权限集合(rfy) -->
+   <select id="queryAll" resultType="String">
+		SELECT per_value FROM i_permission
+	</select>
+
+    <!-- 批量插入权限数据(rfy) -->
+	<insert id="batchInsert" parameterType="list">
+		INSERT INTO i_permission(per_value,per_moule,per_name,per_createtime) VALUES
+		
+		<foreach collection="list" item="permission" separator=",">
+			(#{permission.perValue},#{permission.perMoule},#{permission.perName},NOW())
+		</foreach>
+
+	</insert>
+  	<!-- 清除权限(rfy)  -->
+  	<delete id="delPermission">
+  		delete from i_permission <!-- WHERE per_name NOT IN ('设置角色的权限') -->
+  	</delete>
+  
+</mapper>

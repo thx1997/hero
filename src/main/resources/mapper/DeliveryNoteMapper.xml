@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.DeliveryNoteMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.DeliveryNote" >
+    <id column="dn_id" property="dnId" jdbcType="VARCHAR" />
+    <result column="dn_createtime" property="dnCreatetime" jdbcType="TIMESTAMP" />
+    <result column="dn_c_id" property="dnCId" jdbcType="INTEGER" />
+    <result column="dn_e_id" property="dnEId" jdbcType="INTEGER" />
+    <result column="dn_status" property="dnStatus" jdbcType="INTEGER" />
+    <result column="dn_accountantid" property="dnAccountantid" jdbcType="INTEGER" />
+    <result column="dn_warehousepersonid" property="dnWarehousepersonid" jdbcType="INTEGER" />
+    <result column="dn_salesmanid" property="dnSalesmanid" jdbcType="INTEGER" />
+    <result column="dn_totalmoney" property="dnTotalmoney" jdbcType="DECIMAL" />
+    <result column="dn_remark" property="dnRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dn_id, dn_createtime, dn_c_id, dn_e_id, dn_status, dn_accountantid, dn_warehousepersonid, 
+    dn_salesmanid, dn_totalmoney, dn_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_deliverynote
+    where dn_id = #{dnId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from i_deliverynote
+    where dn_id = #{dnId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.DeliveryNote" >
+    insert into i_deliverynote (dn_id, dn_createtime, dn_c_id, 
+      dn_e_id, dn_status, dn_accountantid, 
+      dn_warehousepersonid, dn_salesmanid, dn_totalmoney, 
+      dn_remark)
+    values (#{dnId,jdbcType=VARCHAR}, #{dnCreatetime,jdbcType=TIMESTAMP}, #{dnCId,jdbcType=INTEGER}, 
+      #{dnEId,jdbcType=INTEGER}, #{dnStatus,jdbcType=INTEGER}, #{dnAccountantid,jdbcType=INTEGER}, 
+      #{dnWarehousepersonid,jdbcType=INTEGER}, #{dnSalesmanid,jdbcType=INTEGER}, #{dnTotalmoney,jdbcType=DECIMAL}, 
+      #{dnRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.DeliveryNote" >
+    insert into i_deliverynote
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dnId != null" >
+        dn_id,
+      </if>
+      <if test="dnCreatetime != null" >
+        dn_createtime,
+      </if>
+      <if test="dnCId != null" >
+        dn_c_id,
+      </if>
+      <if test="dnEId != null" >
+        dn_e_id,
+      </if>
+      <if test="dnStatus != null" >
+        dn_status,
+      </if>
+      <if test="dnAccountantid != null" >
+        dn_accountantid,
+      </if>
+      <if test="dnWarehousepersonid != null" >
+        dn_warehousepersonid,
+      </if>
+      <if test="dnSalesmanid != null" >
+        dn_salesmanid,
+      </if>
+      <if test="dnTotalmoney != null" >
+        dn_totalmoney,
+      </if>
+      <if test="dnRemark != null" >
+        dn_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dnId != null" >
+        #{dnId,jdbcType=VARCHAR},
+      </if>
+      <if test="dnCreatetime != null" >
+        #{dnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dnCId != null" >
+        #{dnCId,jdbcType=INTEGER},
+      </if>
+      <if test="dnEId != null" >
+        #{dnEId,jdbcType=INTEGER},
+      </if>
+      <if test="dnStatus != null" >
+        #{dnStatus,jdbcType=INTEGER},
+      </if>
+      <if test="dnAccountantid != null" >
+        #{dnAccountantid,jdbcType=INTEGER},
+      </if>
+      <if test="dnWarehousepersonid != null" >
+        #{dnWarehousepersonid,jdbcType=INTEGER},
+      </if>
+      <if test="dnSalesmanid != null" >
+        #{dnSalesmanid,jdbcType=INTEGER},
+      </if>
+      <if test="dnTotalmoney != null" >
+        #{dnTotalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dnRemark != null" >
+        #{dnRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.DeliveryNote" >
+    update i_deliverynote
+    <set >
+      <if test="dnCreatetime != null" >
+        dn_createtime = #{dnCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dnCId != null" >
+        dn_c_id = #{dnCId,jdbcType=INTEGER},
+      </if>
+      <if test="dnEId != null" >
+        dn_e_id = #{dnEId,jdbcType=INTEGER},
+      </if>
+      <if test="dnStatus != null" >
+        dn_status = #{dnStatus,jdbcType=INTEGER},
+      </if>
+      <if test="dnAccountantid != null" >
+        dn_accountantid = #{dnAccountantid,jdbcType=INTEGER},
+      </if>
+      <if test="dnWarehousepersonid != null" >
+        dn_warehousepersonid = #{dnWarehousepersonid,jdbcType=INTEGER},
+      </if>
+      <if test="dnSalesmanid != null" >
+        dn_salesmanid = #{dnSalesmanid,jdbcType=INTEGER},
+      </if>
+      <if test="dnTotalmoney != null" >
+        dn_totalmoney = #{dnTotalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="dnRemark != null" >
+        dn_remark = #{dnRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dn_id = #{dnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.DeliveryNote" >
+    update i_deliverynote
+    set dn_createtime = #{dnCreatetime,jdbcType=TIMESTAMP},
+      dn_c_id = #{dnCId,jdbcType=INTEGER},
+      dn_e_id = #{dnEId,jdbcType=INTEGER},
+      dn_status = #{dnStatus,jdbcType=INTEGER},
+      dn_accountantid = #{dnAccountantid,jdbcType=INTEGER},
+      dn_warehousepersonid = #{dnWarehousepersonid,jdbcType=INTEGER},
+      dn_salesmanid = #{dnSalesmanid,jdbcType=INTEGER},
+      dn_totalmoney = #{dnTotalmoney,jdbcType=DECIMAL},
+      dn_remark = #{dnRemark,jdbcType=VARCHAR}
+    where dn_id = #{dnId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.Product" >
+    <id column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="p_name" property="pName" jdbcType="VARCHAR" />
+    <result column="p_ps_id" property="pPsId" jdbcType="INTEGER" />
+    <result column="p_pc_id" property="pPcId" jdbcType="INTEGER" />
+    <result column="p_pb_id" property="pPbId" jdbcType="INTEGER" />
+    <result column="p_salemoney" property="pSalemoney" jdbcType="DECIMAL" />
+    <result column="p_oyaltyrate" property="pOyaltyrate" jdbcType="DECIMAL" />
+    <result column="p_state" property="pState" jdbcType="BIT" />
+    <result column="p_createtime" property="pCreatetime" jdbcType="TIMESTAMP" />
+    <result column="p_updatetime" property="pUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="p_remark" property="pRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    p_id, p_name, p_ps_id, p_pc_id, p_pb_id, p_salemoney, p_oyaltyrate, p_state, p_createtime, 
+    p_updatetime, p_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_product
+    where p_id = #{pId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_product
+    where p_id = #{pId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.Product" >
+    insert into i_product (p_id, p_name, p_ps_id, 
+      p_pc_id, p_pb_id, p_salemoney, 
+      p_oyaltyrate, p_state, p_createtime, 
+      p_updatetime, p_remark)
+    values (#{pId,jdbcType=INTEGER}, #{pName,jdbcType=VARCHAR}, #{pPsId,jdbcType=INTEGER}, 
+      #{pPcId,jdbcType=INTEGER}, #{pPbId,jdbcType=INTEGER}, #{pSalemoney,jdbcType=DECIMAL}, 
+      #{pOyaltyrate,jdbcType=DECIMAL}, #{pState,jdbcType=BIT}, #{pCreatetime,jdbcType=TIMESTAMP}, 
+      #{pUpdatetime,jdbcType=TIMESTAMP}, #{pRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.Product" >
+    insert into i_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="pName != null" >
+        p_name,
+      </if>
+      <if test="pPsId != null" >
+        p_ps_id,
+      </if>
+      <if test="pPcId != null" >
+        p_pc_id,
+      </if>
+      <if test="pPbId != null" >
+        p_pb_id,
+      </if>
+      <if test="pSalemoney != null" >
+        p_salemoney,
+      </if>
+      <if test="pOyaltyrate != null" >
+        p_oyaltyrate,
+      </if>
+      <if test="pState != null" >
+        p_state,
+      </if>
+      <if test="pCreatetime != null" >
+        p_createtime,
+      </if>
+      <if test="pUpdatetime != null" >
+        p_updatetime,
+      </if>
+      <if test="pRemark != null" >
+        p_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="pName != null" >
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pPsId != null" >
+        #{pPsId,jdbcType=INTEGER},
+      </if>
+      <if test="pPcId != null" >
+        #{pPcId,jdbcType=INTEGER},
+      </if>
+      <if test="pPbId != null" >
+        #{pPbId,jdbcType=INTEGER},
+      </if>
+      <if test="pSalemoney != null" >
+        #{pSalemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="pOyaltyrate != null" >
+        #{pOyaltyrate,jdbcType=DECIMAL},
+      </if>
+      <if test="pState != null" >
+        #{pState,jdbcType=BIT},
+      </if>
+      <if test="pCreatetime != null" >
+        #{pCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pUpdatetime != null" >
+        #{pUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pRemark != null" >
+        #{pRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.Product" >
+    update i_product
+    <set >
+      <if test="pName != null" >
+        p_name = #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pPsId != null" >
+        p_ps_id = #{pPsId,jdbcType=INTEGER},
+      </if>
+      <if test="pPcId != null" >
+        p_pc_id = #{pPcId,jdbcType=INTEGER},
+      </if>
+      <if test="pPbId != null" >
+        p_pb_id = #{pPbId,jdbcType=INTEGER},
+      </if>
+      <if test="pSalemoney != null" >
+        p_salemoney = #{pSalemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="pOyaltyrate != null" >
+        p_oyaltyrate = #{pOyaltyrate,jdbcType=DECIMAL},
+      </if>
+      <if test="pState != null" >
+        p_state = #{pState,jdbcType=BIT},
+      </if>
+      <if test="pCreatetime != null" >
+        p_createtime = #{pCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pUpdatetime != null" >
+        p_updatetime = #{pUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pRemark != null" >
+        p_remark = #{pRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.Product" >
+    update i_product
+    set p_name = #{pName,jdbcType=VARCHAR},
+      p_ps_id = #{pPsId,jdbcType=INTEGER},
+      p_pc_id = #{pPcId,jdbcType=INTEGER},
+      p_pb_id = #{pPbId,jdbcType=INTEGER},
+      p_salemoney = #{pSalemoney,jdbcType=DECIMAL},
+      p_oyaltyrate = #{pOyaltyrate,jdbcType=DECIMAL},
+      p_state = #{pState,jdbcType=BIT},
+      p_createtime = #{pCreatetime,jdbcType=TIMESTAMP},
+      p_updatetime = #{pUpdatetime,jdbcType=TIMESTAMP},
+      p_remark = #{pRemark,jdbcType=VARCHAR}
+    where p_id = #{pId,jdbcType=INTEGER}
+  </update>
+</mapper>

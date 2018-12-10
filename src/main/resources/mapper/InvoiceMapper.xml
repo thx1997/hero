@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.InvoiceMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.Invoice" >
+    <id column="in_id" property="inId" jdbcType="INTEGER" />
+    <result column="in_serialnum" property="inSerialnum" jdbcType="INTEGER" />
+    <result column="in_payeename" property="inPayeename" jdbcType="VARCHAR" />
+    <result column="in_createdate" property="inCreatedate" jdbcType="TIMESTAMP" />
+    <result column="in_dn_id" property="inDnId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    in_id, in_serialnum, in_payeename, in_createdate, in_dn_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_invoice
+    where in_id = #{inId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_invoice
+    where in_id = #{inId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.Invoice" >
+    insert into i_invoice (in_id, in_serialnum, in_payeename, 
+      in_createdate, in_dn_id)
+    values (#{inId,jdbcType=INTEGER}, #{inSerialnum,jdbcType=INTEGER}, #{inPayeename,jdbcType=VARCHAR}, 
+      #{inCreatedate,jdbcType=TIMESTAMP}, #{inDnId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.Invoice" >
+    insert into i_invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="inId != null" >
+        in_id,
+      </if>
+      <if test="inSerialnum != null" >
+        in_serialnum,
+      </if>
+      <if test="inPayeename != null" >
+        in_payeename,
+      </if>
+      <if test="inCreatedate != null" >
+        in_createdate,
+      </if>
+      <if test="inDnId != null" >
+        in_dn_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="inId != null" >
+        #{inId,jdbcType=INTEGER},
+      </if>
+      <if test="inSerialnum != null" >
+        #{inSerialnum,jdbcType=INTEGER},
+      </if>
+      <if test="inPayeename != null" >
+        #{inPayeename,jdbcType=VARCHAR},
+      </if>
+      <if test="inCreatedate != null" >
+        #{inCreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inDnId != null" >
+        #{inDnId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.Invoice" >
+    update i_invoice
+    <set >
+      <if test="inSerialnum != null" >
+        in_serialnum = #{inSerialnum,jdbcType=INTEGER},
+      </if>
+      <if test="inPayeename != null" >
+        in_payeename = #{inPayeename,jdbcType=VARCHAR},
+      </if>
+      <if test="inCreatedate != null" >
+        in_createdate = #{inCreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inDnId != null" >
+        in_dn_id = #{inDnId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where in_id = #{inId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.Invoice" >
+    update i_invoice
+    set in_serialnum = #{inSerialnum,jdbcType=INTEGER},
+      in_payeename = #{inPayeename,jdbcType=VARCHAR},
+      in_createdate = #{inCreatedate,jdbcType=TIMESTAMP},
+      in_dn_id = #{inDnId,jdbcType=VARCHAR}
+    where in_id = #{inId,jdbcType=INTEGER}
+  </update>
+</mapper>

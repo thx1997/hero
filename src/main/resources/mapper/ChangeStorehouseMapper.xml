@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.ChangeStorehouseMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.ChangeStorehouse" >
+    <id column="csh_id" property="cshId" jdbcType="INTEGER" />
+    <result column="csh_createtime" property="cshCreatetime" jdbcType="TIMESTAMP" />
+    <result column="csh_e_id" property="cshEId" jdbcType="INTEGER" />
+    <result column="csh_oldid" property="cshOldid" jdbcType="INTEGER" />
+    <result column="csh_newid" property="cshNewid" jdbcType="INTEGER" />
+    <result column="csh_p_id" property="cshPId" jdbcType="INTEGER" />
+    <result column="csh_count" property="cshCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    csh_id, csh_createtime, csh_e_id, csh_oldid, csh_newid, csh_p_id, csh_count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_change_storehouse
+    where csh_id = #{cshId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_change_storehouse
+    where csh_id = #{cshId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.ChangeStorehouse" >
+    insert into i_change_storehouse (csh_id, csh_createtime, csh_e_id, 
+      csh_oldid, csh_newid, csh_p_id, 
+      csh_count)
+    values (#{cshId,jdbcType=INTEGER}, #{cshCreatetime,jdbcType=TIMESTAMP}, #{cshEId,jdbcType=INTEGER}, 
+      #{cshOldid,jdbcType=INTEGER}, #{cshNewid,jdbcType=INTEGER}, #{cshPId,jdbcType=INTEGER}, 
+      #{cshCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.ChangeStorehouse" >
+    insert into i_change_storehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cshId != null" >
+        csh_id,
+      </if>
+      <if test="cshCreatetime != null" >
+        csh_createtime,
+      </if>
+      <if test="cshEId != null" >
+        csh_e_id,
+      </if>
+      <if test="cshOldid != null" >
+        csh_oldid,
+      </if>
+      <if test="cshNewid != null" >
+        csh_newid,
+      </if>
+      <if test="cshPId != null" >
+        csh_p_id,
+      </if>
+      <if test="cshCount != null" >
+        csh_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cshId != null" >
+        #{cshId,jdbcType=INTEGER},
+      </if>
+      <if test="cshCreatetime != null" >
+        #{cshCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cshEId != null" >
+        #{cshEId,jdbcType=INTEGER},
+      </if>
+      <if test="cshOldid != null" >
+        #{cshOldid,jdbcType=INTEGER},
+      </if>
+      <if test="cshNewid != null" >
+        #{cshNewid,jdbcType=INTEGER},
+      </if>
+      <if test="cshPId != null" >
+        #{cshPId,jdbcType=INTEGER},
+      </if>
+      <if test="cshCount != null" >
+        #{cshCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.ChangeStorehouse" >
+    update i_change_storehouse
+    <set >
+      <if test="cshCreatetime != null" >
+        csh_createtime = #{cshCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cshEId != null" >
+        csh_e_id = #{cshEId,jdbcType=INTEGER},
+      </if>
+      <if test="cshOldid != null" >
+        csh_oldid = #{cshOldid,jdbcType=INTEGER},
+      </if>
+      <if test="cshNewid != null" >
+        csh_newid = #{cshNewid,jdbcType=INTEGER},
+      </if>
+      <if test="cshPId != null" >
+        csh_p_id = #{cshPId,jdbcType=INTEGER},
+      </if>
+      <if test="cshCount != null" >
+        csh_count = #{cshCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where csh_id = #{cshId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.ChangeStorehouse" >
+    update i_change_storehouse
+    set csh_createtime = #{cshCreatetime,jdbcType=TIMESTAMP},
+      csh_e_id = #{cshEId,jdbcType=INTEGER},
+      csh_oldid = #{cshOldid,jdbcType=INTEGER},
+      csh_newid = #{cshNewid,jdbcType=INTEGER},
+      csh_p_id = #{cshPId,jdbcType=INTEGER},
+      csh_count = #{cshCount,jdbcType=INTEGER}
+    where csh_id = #{cshId,jdbcType=INTEGER}
+  </update>
+</mapper>

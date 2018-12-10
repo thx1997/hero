@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.DeliveryDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.DeliveryDetail" >
+    <id column="dd_id" property="ddId" jdbcType="INTEGER" />
+    <result column="dd_dn_id" property="ddDnId" jdbcType="VARCHAR" />
+    <result column="dd_p_id" property="ddPId" jdbcType="INTEGER" />
+    <result column="dd_quantity" property="ddQuantity" jdbcType="INTEGER" />
+    <result column="dd_unitprice" property="ddUnitprice" jdbcType="DECIMAL" />
+    <result column="dd_amount" property="ddAmount" jdbcType="DECIMAL" />
+    <result column="dd_royalty" property="ddRoyalty" jdbcType="DECIMAL" />
+    <result column="dd_remark" property="ddRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dd_id, dd_dn_id, dd_p_id, dd_quantity, dd_unitprice, dd_amount, dd_royalty, dd_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_deliverydetail
+    where dd_id = #{ddId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_deliverydetail
+    where dd_id = #{ddId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.DeliveryDetail" >
+    insert into i_deliverydetail (dd_id, dd_dn_id, dd_p_id, 
+      dd_quantity, dd_unitprice, dd_amount, 
+      dd_royalty, dd_remark)
+    values (#{ddId,jdbcType=INTEGER}, #{ddDnId,jdbcType=VARCHAR}, #{ddPId,jdbcType=INTEGER}, 
+      #{ddQuantity,jdbcType=INTEGER}, #{ddUnitprice,jdbcType=DECIMAL}, #{ddAmount,jdbcType=DECIMAL}, 
+      #{ddRoyalty,jdbcType=DECIMAL}, #{ddRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.DeliveryDetail" >
+    insert into i_deliverydetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ddId != null" >
+        dd_id,
+      </if>
+      <if test="ddDnId != null" >
+        dd_dn_id,
+      </if>
+      <if test="ddPId != null" >
+        dd_p_id,
+      </if>
+      <if test="ddQuantity != null" >
+        dd_quantity,
+      </if>
+      <if test="ddUnitprice != null" >
+        dd_unitprice,
+      </if>
+      <if test="ddAmount != null" >
+        dd_amount,
+      </if>
+      <if test="ddRoyalty != null" >
+        dd_royalty,
+      </if>
+      <if test="ddRemark != null" >
+        dd_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ddId != null" >
+        #{ddId,jdbcType=INTEGER},
+      </if>
+      <if test="ddDnId != null" >
+        #{ddDnId,jdbcType=VARCHAR},
+      </if>
+      <if test="ddPId != null" >
+        #{ddPId,jdbcType=INTEGER},
+      </if>
+      <if test="ddQuantity != null" >
+        #{ddQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="ddUnitprice != null" >
+        #{ddUnitprice,jdbcType=DECIMAL},
+      </if>
+      <if test="ddAmount != null" >
+        #{ddAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="ddRoyalty != null" >
+        #{ddRoyalty,jdbcType=DECIMAL},
+      </if>
+      <if test="ddRemark != null" >
+        #{ddRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.DeliveryDetail" >
+    update i_deliverydetail
+    <set >
+      <if test="ddDnId != null" >
+        dd_dn_id = #{ddDnId,jdbcType=VARCHAR},
+      </if>
+      <if test="ddPId != null" >
+        dd_p_id = #{ddPId,jdbcType=INTEGER},
+      </if>
+      <if test="ddQuantity != null" >
+        dd_quantity = #{ddQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="ddUnitprice != null" >
+        dd_unitprice = #{ddUnitprice,jdbcType=DECIMAL},
+      </if>
+      <if test="ddAmount != null" >
+        dd_amount = #{ddAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="ddRoyalty != null" >
+        dd_royalty = #{ddRoyalty,jdbcType=DECIMAL},
+      </if>
+      <if test="ddRemark != null" >
+        dd_remark = #{ddRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dd_id = #{ddId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.DeliveryDetail" >
+    update i_deliverydetail
+    set dd_dn_id = #{ddDnId,jdbcType=VARCHAR},
+      dd_p_id = #{ddPId,jdbcType=INTEGER},
+      dd_quantity = #{ddQuantity,jdbcType=INTEGER},
+      dd_unitprice = #{ddUnitprice,jdbcType=DECIMAL},
+      dd_amount = #{ddAmount,jdbcType=DECIMAL},
+      dd_royalty = #{ddRoyalty,jdbcType=DECIMAL},
+      dd_remark = #{ddRemark,jdbcType=VARCHAR}
+    where dd_id = #{ddId,jdbcType=INTEGER}
+  </update>
+</mapper>
