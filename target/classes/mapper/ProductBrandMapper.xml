@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.ProductBrandMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.ProductBrand" >
+    <id column="pb_id" property="pbId" jdbcType="INTEGER" />
+    <result column="pb_name" property="pbName" jdbcType="VARCHAR" />
+    <result column="pb_createtime" property="pbCreatetime" jdbcType="TIMESTAMP" />
+    <result column="pb_updatetime" property="pbUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="pb_remark" property="pbRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pb_id, pb_name, pb_createtime, pb_updatetime, pb_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_product_brand
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_product_brand
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.ProductBrand" >
+    insert into i_product_brand (pb_id, pb_name, pb_createtime, 
+      pb_updatetime, pb_remark)
+    values (#{pbId,jdbcType=INTEGER}, #{pbName,jdbcType=VARCHAR}, #{pbCreatetime,jdbcType=TIMESTAMP}, 
+      #{pbUpdatetime,jdbcType=TIMESTAMP}, #{pbRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.ProductBrand" >
+    insert into i_product_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pbId != null" >
+        pb_id,
+      </if>
+      <if test="pbName != null" >
+        pb_name,
+      </if>
+      <if test="pbCreatetime != null" >
+        pb_createtime,
+      </if>
+      <if test="pbUpdatetime != null" >
+        pb_updatetime,
+      </if>
+      <if test="pbRemark != null" >
+        pb_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pbId != null" >
+        #{pbId,jdbcType=INTEGER},
+      </if>
+      <if test="pbName != null" >
+        #{pbName,jdbcType=VARCHAR},
+      </if>
+      <if test="pbCreatetime != null" >
+        #{pbCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pbUpdatetime != null" >
+        #{pbUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pbRemark != null" >
+        #{pbRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.ProductBrand" >
+    update i_product_brand
+    <set >
+      <if test="pbName != null" >
+        pb_name = #{pbName,jdbcType=VARCHAR},
+      </if>
+      <if test="pbCreatetime != null" >
+        pb_createtime = #{pbCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pbUpdatetime != null" >
+        pb_updatetime = #{pbUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pbRemark != null" >
+        pb_remark = #{pbRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.ProductBrand" >
+    update i_product_brand
+    set pb_name = #{pbName,jdbcType=VARCHAR},
+      pb_createtime = #{pbCreatetime,jdbcType=TIMESTAMP},
+      pb_updatetime = #{pbUpdatetime,jdbcType=TIMESTAMP},
+      pb_remark = #{pbRemark,jdbcType=VARCHAR}
+    where pb_id = #{pbId,jdbcType=INTEGER}
+  </update>
+</mapper>

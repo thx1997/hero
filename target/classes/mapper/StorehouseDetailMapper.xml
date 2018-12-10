@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.StorehouseDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.StorehouseDetail" >
+    <id column="sd_id" property="sdId" jdbcType="INTEGER" />
+    <result column="sd_s_id" property="sdSId" jdbcType="INTEGER" />
+    <result column="sd_p_id" property="sdPId" jdbcType="INTEGER" />
+    <result column="sd_number" property="sdNumber" jdbcType="INTEGER" />
+    <result column="sd_updatetime" property="sdUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="sd_remark" property="sdRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sd_id, sd_s_id, sd_p_id, sd_number, sd_updatetime, sd_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_storehousedetail
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_storehousedetail
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.StorehouseDetail" >
+    insert into i_storehousedetail (sd_id, sd_s_id, sd_p_id, 
+      sd_number, sd_updatetime, sd_remark
+      )
+    values (#{sdId,jdbcType=INTEGER}, #{sdSId,jdbcType=INTEGER}, #{sdPId,jdbcType=INTEGER}, 
+      #{sdNumber,jdbcType=INTEGER}, #{sdUpdatetime,jdbcType=TIMESTAMP}, #{sdRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.StorehouseDetail" >
+    insert into i_storehousedetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sdId != null" >
+        sd_id,
+      </if>
+      <if test="sdSId != null" >
+        sd_s_id,
+      </if>
+      <if test="sdPId != null" >
+        sd_p_id,
+      </if>
+      <if test="sdNumber != null" >
+        sd_number,
+      </if>
+      <if test="sdUpdatetime != null" >
+        sd_updatetime,
+      </if>
+      <if test="sdRemark != null" >
+        sd_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sdId != null" >
+        #{sdId,jdbcType=INTEGER},
+      </if>
+      <if test="sdSId != null" >
+        #{sdSId,jdbcType=INTEGER},
+      </if>
+      <if test="sdPId != null" >
+        #{sdPId,jdbcType=INTEGER},
+      </if>
+      <if test="sdNumber != null" >
+        #{sdNumber,jdbcType=INTEGER},
+      </if>
+      <if test="sdUpdatetime != null" >
+        #{sdUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sdRemark != null" >
+        #{sdRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.StorehouseDetail" >
+    update i_storehousedetail
+    <set >
+      <if test="sdSId != null" >
+        sd_s_id = #{sdSId,jdbcType=INTEGER},
+      </if>
+      <if test="sdPId != null" >
+        sd_p_id = #{sdPId,jdbcType=INTEGER},
+      </if>
+      <if test="sdNumber != null" >
+        sd_number = #{sdNumber,jdbcType=INTEGER},
+      </if>
+      <if test="sdUpdatetime != null" >
+        sd_updatetime = #{sdUpdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sdRemark != null" >
+        sd_remark = #{sdRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.StorehouseDetail" >
+    update i_storehousedetail
+    set sd_s_id = #{sdSId,jdbcType=INTEGER},
+      sd_p_id = #{sdPId,jdbcType=INTEGER},
+      sd_number = #{sdNumber,jdbcType=INTEGER},
+      sd_updatetime = #{sdUpdatetime,jdbcType=TIMESTAMP},
+      sd_remark = #{sdRemark,jdbcType=VARCHAR}
+    where sd_id = #{sdId,jdbcType=INTEGER}
+  </update>
+</mapper>

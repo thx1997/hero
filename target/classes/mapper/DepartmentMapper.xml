@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.Department" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="d_name" property="dName" jdbcType="VARCHAR" />
+    <result column="d_parentid" property="dParentid" jdbcType="INTEGER" />
+    <result column="d_createtime" property="dCreatetime" jdbcType="TIMESTAMP" />
+    <result column="d_updatetime" property="dUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="d_remark" property="dRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    d_id, d_name, d_parentid, d_createtime, d_updatetime, d_remark
+  </sql>
+  <sql id="queryWhere">
+     <where>
+           <if test="dName != null and dName != ''">
+				and d_name like "%"#{dName}"%"
+			</if>
+			<if test="beginCreatetime != null">
+				and d_createtime &gt; #{beginCreatetime}
+			</if>
+			<if test="endCreatetime != null">
+				and d_createtime &lt; #{endCreatetime}
+			</if>
+			<if test="beginUpdatetime != null">
+				and d_updatetime &gt; #{beginUpdatetime}
+			</if>
+			<if test="endUpdatetime != null">
+				and d_updatetime &lt; #{endUpdatetime}
+			</if>
+		</where>
+  </sql>
+  <!--多条件分页查询部门,返回满足条件的集合(thx) -->
+	<select id="queryDep" parameterType="com.hero.entity.query.DepartmentQuery" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />		
+		from i_department
+		<include refid="queryWhere" />
+		limit #{startIndex},#{rows}
+	</select>
+	<!--多条件分页查询部门,返回满足条件的集合的总条数(thx) -->
+	<select id="queryDepCount"  parameterType="com.hero.entity.query.DepartmentQuery" resultType="int">
+		select	count(*) from i_department
+		<include refid="queryWhere" />
+	</select>
+   <!-- 查询所有部门(thx) -->
+    <select id="queryAllDep" resultMap="BaseResultMap">
+       	select	
+       	<include refid="Base_Column_List" />	
+       	 from i_department
+    </select>
+    
+  <!-- 添加新部门(thx) -->
+  <insert id="insertSelective" parameterType="com.hero.entity.Department" >
+    insert into i_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dName != null" >
+        d_name,
+      </if>
+      <if test="1==1" >
+        d_createtime,
+      </if>
+      <if test="dRemark != null" >
+        d_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="1==1" >
+        now(),
+      </if>
+      <if test="dRemark != null" >
+        #{dRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- 根据编号删除部门(thx)   -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_department
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <!-- 更新部门信息(thx) -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.Department" >
+    update i_department
+    <set >
+      <if test="dName != null" >
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="1==1" >
+        d_updatetime = now(),
+      </if>
+      <if test="dRemark != null" >
+        d_remark = #{dRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

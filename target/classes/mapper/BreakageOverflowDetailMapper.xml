@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.BreakageOverflowDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.BreakageOverflowDetail" >
+    <id column="bod_id" property="bodId" jdbcType="INTEGER" />
+    <result column="bod_p_id" property="bodPId" jdbcType="INTEGER" />
+    <result column="bod_type" property="bodType" jdbcType="BIT" />
+    <result column="bod_createtime" property="bodCreatetime" jdbcType="TIMESTAMP" />
+    <result column="bob_remark" property="bobRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bod_id, bod_p_id, bod_type, bod_createtime, bob_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_breakage_overflow_detail
+    where bod_id = #{bodId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_breakage_overflow_detail
+    where bod_id = #{bodId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.BreakageOverflowDetail" >
+    insert into i_breakage_overflow_detail (bod_id, bod_p_id, bod_type, 
+      bod_createtime, bob_remark)
+    values (#{bodId,jdbcType=INTEGER}, #{bodPId,jdbcType=INTEGER}, #{bodType,jdbcType=BIT}, 
+      #{bodCreatetime,jdbcType=TIMESTAMP}, #{bobRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.BreakageOverflowDetail" >
+    insert into i_breakage_overflow_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bodId != null" >
+        bod_id,
+      </if>
+      <if test="bodPId != null" >
+        bod_p_id,
+      </if>
+      <if test="bodType != null" >
+        bod_type,
+      </if>
+      <if test="bodCreatetime != null" >
+        bod_createtime,
+      </if>
+      <if test="bobRemark != null" >
+        bob_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bodId != null" >
+        #{bodId,jdbcType=INTEGER},
+      </if>
+      <if test="bodPId != null" >
+        #{bodPId,jdbcType=INTEGER},
+      </if>
+      <if test="bodType != null" >
+        #{bodType,jdbcType=BIT},
+      </if>
+      <if test="bodCreatetime != null" >
+        #{bodCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bobRemark != null" >
+        #{bobRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.BreakageOverflowDetail" >
+    update i_breakage_overflow_detail
+    <set >
+      <if test="bodPId != null" >
+        bod_p_id = #{bodPId,jdbcType=INTEGER},
+      </if>
+      <if test="bodType != null" >
+        bod_type = #{bodType,jdbcType=BIT},
+      </if>
+      <if test="bodCreatetime != null" >
+        bod_createtime = #{bodCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bobRemark != null" >
+        bob_remark = #{bobRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bod_id = #{bodId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.BreakageOverflowDetail" >
+    update i_breakage_overflow_detail
+    set bod_p_id = #{bodPId,jdbcType=INTEGER},
+      bod_type = #{bodType,jdbcType=BIT},
+      bod_createtime = #{bodCreatetime,jdbcType=TIMESTAMP},
+      bob_remark = #{bobRemark,jdbcType=VARCHAR}
+    where bod_id = #{bodId,jdbcType=INTEGER}
+  </update>
+</mapper>

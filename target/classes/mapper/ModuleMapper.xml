@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.ModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.Module" >
+    <id column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="m_name" property="mName" jdbcType="VARCHAR" />
+    <result column="m_parentid" property="mParentid" jdbcType="INTEGER" />
+    <result column="m_path" property="mPath" jdbcType="VARCHAR" />
+    <result column="m_weight" property="mWeight" jdbcType="INTEGER" />
+    <result column="m_createtime" property="mCreatetime" jdbcType="TIMESTAMP" />
+    <result column="m_updatetime" property="mUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="m_remark" property="mRemark" jdbcType="VARCHAR" />
+  </resultMap>
+   <sql id="Base_Column_List" >
+    m_id, m_name, m_parentid, m_path, m_weight, m_createtime, m_updatetime, m_remark
+  </sql>
+  <!--根据角色编号查询其拥有的模块的编号 (thx) -->
+	<select id="selectMidByRid" parameterType="list" resultType="Integer">
+		SELECT rm_m_id FROM i_role_module WHERE rm_r_id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+  
+  <!-- 根据id查询 -->
+  
+  <!-- 根据模块id查询模块信息(rfy) -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_module
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+  <!-- 删除模块(rfy) -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_module
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hero.entity.Module" >
+    insert into i_module (m_id, m_name, m_parentid, 
+      m_path, m_weight, m_createtime, 
+      m_updatetime, m_remark)
+    values (#{mId,jdbcType=INTEGER}, #{mName,jdbcType=VARCHAR}, #{mParentid,jdbcType=INTEGER}, 
+      #{mPath,jdbcType=VARCHAR}, #{mWeight,jdbcType=INTEGER}, #{mCreatetime,jdbcType=TIMESTAMP}, 
+      #{mUpdatetime,jdbcType=TIMESTAMP}, #{mRemark,jdbcType=VARCHAR})
+  </insert>
+  
+   <!--  添加模块信息（rfy） -->
+  <insert id="insertSelective" parameterType="com.hero.entity.Module" >
+    insert into i_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+      <if test="mName != null" >
+        m_name,
+      </if>
+      <if test="mParentid != null" >
+        m_parentid,
+      </if>
+      <if test="mPath != null" >
+        m_path,
+      </if>
+      <if test="mWeight != null" >
+        m_weight,
+      </if>  
+        m_createtime,
+      <if test="mRemark != null" >
+        m_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      
+      <if test="mName != null" >
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mParentid != null" >
+        #{mParentid,jdbcType=INTEGER},
+      </if>
+      <if test="mPath != null" >
+        #{mPath,jdbcType=VARCHAR},
+      </if>
+      <if test="mWeight != null" >
+        #{mWeight,jdbcType=INTEGER},
+      </if>  
+        NOW(),
+      <if test="mRemark != null" >
+        #{mRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 根据模块名称和父id判断模块是否存在 -->
+  <select id="isExitByNameAndPid" resultType="int">
+		SELECT count(*) FROM i_module WHERE m_name=#{mname} and m_parentid =#{pid}
+  </select>
+  
+  
+  <!--  修改模块信息（rfy）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.Module" >
+    update i_module
+    <set >
+      <if test="mName != null" >
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mPath != null" >
+        m_path = #{mPath,jdbcType=VARCHAR},
+      </if>
+      <if test="mWeight != null" >
+        m_weight = #{mWeight,jdbcType=INTEGER},
+      </if>  
+        m_updatetime = NOW(),
+      <if test="mRemark != null" >
+        m_remark = #{mRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.Module" >
+    update i_module
+    set m_name = #{mName,jdbcType=VARCHAR},
+      m_parentid = #{mParentid,jdbcType=INTEGER},
+      m_path = #{mPath,jdbcType=VARCHAR},
+      m_weight = #{mWeight,jdbcType=INTEGER},
+      m_createtime = #{mCreatetime,jdbcType=TIMESTAMP},
+      m_updatetime = #{mUpdatetime,jdbcType=TIMESTAMP},
+      m_remark = #{mRemark,jdbcType=VARCHAR}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <!-- 根据父id和角色id查询角色拥有的模块信息 (rfy)-->
+  <select id="queryModuleByPidRid" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+     FROM i_module WHERE m_id IN(SELECT rm_m_id FROM i_role_module WHERE rm_r_id IN
+    <foreach collection="rids" item="rids" open="(" separator="," close=")" index="index">
+    #{rids}
+    </foreach>)
+    AND m_parentid=#{pid} ORDER BY m_weight DESC
+  </select>
+  
+  
+  
+  <!--查询所有模块信息 （rfy） -->
+	<select id="queryChildrenById" parameterType="int" resultMap="BaseResultMap">
+		SELECT * FROM i_module WHERE m_parentid =#{parentId} ORDER BY m_weight DESC
+	</select>
+	<select id="queryParent" parameterType="com.hero.entity.Module" resultMap="BaseResultMap">
+		SELECT * FROM i_module WHERE m_parentid =0 ORDER BY m_weight DESC
+		LIMIT #{startIndex},#{rows}
+	</select>
+	<!--查询总记录数（rfy）  -->
+	<select id="queryAllCount" resultType="int">
+		SELECT count(*) FROM i_module WHERE m_parentid =0
+	</select>
+  
+  
+  
+  
+    <!-- 根据模块id查询模块信息 （rfy）-->
+	<select id="queryTreeGridModuleByIds" resultMap="BaseResultMap">
+		SELECT * FROM i_module 
+		<where>
+		<if test=" rootIds != null ">
+		 m_id IN
+		<foreach item="id" collection="rootIds" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+		</if>
+		</where>
+	</select>
+	<!--根据名称查询模块编号（rfy）  -->
+	<select id="queryModuleIdsByModuleNameLike" parameterType="com.hero.entity.Module" resultType="int" >
+		SELECT m_id FROM i_module
+		<where>
+			<if test=" mName != null and mName != '' ">
+			 m_name LIKE "%"#{mName}"%"
+			</if>
+		</where>
+	</select>
+	<!-- 查询模块的父id （rfy）-->
+	<select id="queryParentIdByModuleId" parameterType="int" resultType="int">
+		SELECT m_parentid FROM i_module
+		<where>
+		<if test=" moduleId != null ">
+		 m_id = #{moduleId}
+		</if>
+		</where>
+	</select>
+	<select id="queryMenuTreeChildrenById" resultMap="BaseResultMap">
+		SELECT * FROM i_module WHERE m_parentid = #{parentId}
+		<if test=" moduleIds != null ">
+			AND m_id IN
+			<foreach item="id" collection="moduleIds" open="("
+				separator="," close=")">
+				#{id}
+			</foreach>
+		</if>
+	</select>
+	<!--查询总记录数（rfy）  -->
+	<select id="queryCount" parameterType="String" resultType="int">
+		SELECT count(*) FROM i_module WHERE m_id IN(SELECT m_parentid FROM i_module WHERE m_name LIKE "%"#{name}"%")
+	</select>
+  
+  
+  
+  <!-- 根据模块id查询其子模块 （rfy）-->
+  <select id="selectMoudleByMid" parameterType="Integer" resultMap="BaseResultMap">
+		SELECT * FROM i_module WHERE m_parentid =#{mid}
+  </select>
+  <!--查询模块是否存在角色关联  （rfy）-->
+  <select id="isExitRoleBymid" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM i_role_module WHERE rm_m_id=#{mid}
+  </select>
+  
+  
+  
+  
+  
+  
+</mapper>

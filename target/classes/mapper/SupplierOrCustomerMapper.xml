@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.SupplierOrCustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.SupplierOrCustomer" >
+    <id column="s_id" property="sId" jdbcType="INTEGER" />
+    <result column="s_name" property="sName" jdbcType="VARCHAR" />
+    <result column="s_fax" property="sFax" jdbcType="VARCHAR" />
+    <result column="s_sc_id" property="sScId" jdbcType="INTEGER" />
+    <result column="s_constacperson" property="sConstacperson" jdbcType="VARCHAR" />
+    <result column="s_constacphone" property="sConstacphone" jdbcType="VARCHAR" />
+    <result column="s_address" property="sAddress" jdbcType="VARCHAR" />
+    <result column="s_description" property="sDescription" jdbcType="VARCHAR" />
+    <result column="s_isexit" property="sIsexit" jdbcType="CHAR" />
+    <result column="s_tallage" property="sTallage" jdbcType="VARCHAR" />
+    <result column="s_createtime" property="sCreatetime" jdbcType="TIMESTAMP" />
+    <result column="s_updatetime" property="sUpdatetime" jdbcType="TIMESTAMP" />
+    <result column="s_remark" property="sRemark" jdbcType="VARCHAR" />
+    <result column="s_type" property="sType" jdbcType="BIT" />
+    <!--所属类别映射设置(rfy) -->
+	<association property="category" resultMap="com.hero.repository.SupplierOrCustomerCategoryMapper.BaseResultMap"></association>
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    s_id, s_name, s_fax, s_sc_id, s_constacperson, s_constacphone, s_address, s_description, 
+    s_isexit, s_tallage, s_createtime, s_updatetime, s_remark, s_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_supplier_customer
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_supplier_customer
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.SupplierOrCustomer" >
+    insert into i_supplier_customer (s_id, s_name, s_fax, 
+      s_sc_id, s_constacperson, s_constacphone, 
+      s_address, s_description, s_isexit, 
+      s_tallage, s_createtime, s_updatetime, 
+      s_remark, s_type)
+    values (#{sId,jdbcType=INTEGER}, #{sName,jdbcType=VARCHAR}, #{sFax,jdbcType=VARCHAR}, 
+      #{sScId,jdbcType=INTEGER}, #{sConstacperson,jdbcType=VARCHAR}, #{sConstacphone,jdbcType=VARCHAR}, 
+      #{sAddress,jdbcType=VARCHAR}, #{sDescription,jdbcType=VARCHAR}, #{sIsexit,jdbcType=CHAR}, 
+      #{sTallage,jdbcType=VARCHAR}, #{sCreatetime,jdbcType=TIMESTAMP}, #{sUpdatetime,jdbcType=TIMESTAMP}, 
+      #{sRemark,jdbcType=VARCHAR}, #{sType,jdbcType=BIT})
+  </insert>
+  <!-- 添加（rfy） -->
+  <insert id="insertSelective" parameterType="com.hero.entity.SupplierOrCustomer" >
+    insert into i_supplier_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+      <if test="sName != null and sName != ''" >
+        s_name,
+      </if>
+      <if test="sFax != null" >
+        s_fax,
+      </if>
+      <if test="sScId != null" >
+        s_sc_id,
+      </if>
+      <if test="sConstacperson != null" >
+        s_constacperson,
+      </if>
+      <if test="sConstacphone != null" >
+        s_constacphone,
+      </if>
+      <if test="sAddress != null" >
+        s_address,
+      </if>
+      <if test="sDescription != null" >
+        s_description,
+      </if>
+     
+      <if test="sTallage != null" >
+        s_tallage,
+      </if>
+      
+        s_createtime,
+      
+      
+      <if test="sRemark != null" >
+        s_remark,
+      </if>
+      <if test="sType != null" >
+        s_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     
+      <if test="sName != null" >
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sFax != null" >
+        #{sFax,jdbcType=VARCHAR},
+      </if>
+      <if test="sScId != null" >
+        #{sScId,jdbcType=INTEGER},
+      </if>
+      <if test="sConstacperson != null" >
+        #{sConstacperson,jdbcType=VARCHAR},
+      </if>
+      <if test="sConstacphone != null" >
+        #{sConstacphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sAddress != null" >
+        #{sAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sDescription != null" >
+        #{sDescription,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="sTallage != null" >
+        #{sTallage,jdbcType=VARCHAR},
+      </if>
+        NOW(),
+      <if test="sRemark != null" >
+        #{sRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="sType != null" >
+        #{sType,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <!-- 修改（rfy） -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.SupplierOrCustomer" >
+    update i_supplier_customer
+    <set >
+      <if test="sName != null" >
+        s_name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="sFax != null" >
+        s_fax = #{sFax,jdbcType=VARCHAR},
+      </if>
+      <if test="sScId != null" >
+        s_sc_id = #{sScId,jdbcType=INTEGER},
+      </if>
+      <if test="sConstacperson != null" >
+        s_constacperson = #{sConstacperson,jdbcType=VARCHAR},
+      </if>
+      <if test="sConstacphone != null" >
+        s_constacphone = #{sConstacphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sAddress != null" >
+        s_address = #{sAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sDescription != null" >
+        s_description = #{sDescription,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="sTallage != null" >
+        s_tallage = #{sTallage,jdbcType=VARCHAR},
+      </if>
+      
+      
+        s_updatetime = NOW(),
+      
+      <if test="sRemark != null" >
+        s_remark = #{sRemark,jdbcType=VARCHAR},
+      </if>
+      
+    </set>
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.SupplierOrCustomer" >
+    update i_supplier_customer
+    set s_name = #{sName,jdbcType=VARCHAR},
+      s_fax = #{sFax,jdbcType=VARCHAR},
+      s_sc_id = #{sScId,jdbcType=INTEGER},
+      s_constacperson = #{sConstacperson,jdbcType=VARCHAR},
+      s_constacphone = #{sConstacphone,jdbcType=VARCHAR},
+      s_address = #{sAddress,jdbcType=VARCHAR},
+      s_description = #{sDescription,jdbcType=VARCHAR},
+      s_isexit = #{sIsexit,jdbcType=CHAR},
+      s_tallage = #{sTallage,jdbcType=VARCHAR},
+      s_createtime = #{sCreatetime,jdbcType=TIMESTAMP},
+      s_updatetime = #{sUpdatetime,jdbcType=TIMESTAMP},
+      s_remark = #{sRemark,jdbcType=VARCHAR},
+      s_type = #{sType,jdbcType=BIT}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- rfy -->
+  <sql id="CountwhereSQL">
+  	<where>
+  		  sc.s_isexit=0
+	      <if test="scname != null and scname!=''" >
+	        and sc.s_name like "%"#{scname}"%"
+	      </if>
+	      <if test="cateid != null" >
+	        and sc.s_sc_id=#{cateid}
+	      </if>
+	      <if test="sctype != null" >
+	        and sc.s_type=#{sctype}
+	      </if>
+	      
+  	</where>
+  	  	  <if test="orderby != null and orderby!=''" >
+	        order by ${orderby}
+	      </if>
+  </sql>
+  <!--多条件分页查询供应商客户信息 (rfy)-->
+  	<select id="selectAllByCount" resultMap="BaseResultMap" parameterType="com.hero.entity.query.SupplierOrCustomerQuery">
+  		SELECT * FROM i_supplier_customer sc LEFT JOIN i_supplier_customer_category scc ON sc.s_sc_id=scc.sc_id
+  		<include refid="CountwhereSQL"/>
+  		LIMIT #{startIndex},#{rows}
+  	</select>
+  	
+  	<!--查询分页总记录数(rfy) -->
+  	<select id="selectCount" resultType="int" parameterType="com.hero.entity.query.SupplierOrCustomerQuery">
+  		select count(*) FROM i_supplier_customer sc LEFT JOIN i_supplier_customer_category scc ON sc.s_sc_id=scc.sc_id
+  		<include refid="CountwhereSQL"/>
+  	</select>
+  	<!-- 软删（rfy） -->
+  	<update id="updexit" parameterType="java.lang.Integer" >
+    update i_supplier_customer
+    set s_isexit = 1
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  
+  <!--根据名称查询是否已存在(rfy) -->
+  	<select id="isExitByName" resultType="int" parameterType="java.lang.String">
+  		select count(*) FROM i_supplier_customer where s_name=#{name}
+  	</select>
+  	
+  <!-- 批量修改供应商、客户的类别（rfy） -->
+  	<update id="updBatch">
+  		UPDATE i_supplier_customer SET s_sc_id =#{cateid} WHERE s_id IN
+  		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+  	</update>
+  
+  <!--根据编号查询供货商客户信息 （rfy） -->
+  	<select id="getSupplierOrCustomerBySid" resultMap="BaseResultMap" parameterType="int">
+  		SELECT * FROM i_supplier_customer where s_id IN
+  		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+  	</select>
+</mapper>

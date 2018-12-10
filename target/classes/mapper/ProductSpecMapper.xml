@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hero.repository.ProductSpecMapper" >
+  <resultMap id="BaseResultMap" type="com.hero.entity.ProductSpec" >
+    <id column="ps_id" property="psId" jdbcType="INTEGER" />
+    <result column="ps_texture" property="psTexture" jdbcType="VARCHAR" />
+    <result column="ps_weight" property="psWeight" jdbcType="DECIMAL" />
+    <result column="ps_weightunit" property="psWeightunit" jdbcType="VARCHAR" />
+    <result column="ps_size" property="psSize" jdbcType="DECIMAL" />
+    <result column="ps_sizeunit" property="psSizeunit" jdbcType="VARCHAR" />
+    <result column="ps_dia" property="psDia" jdbcType="DECIMAL" />
+    <result column="ps_diaunit" property="psDiaunit" jdbcType="VARCHAR" />
+    <result column="ps_density" property="psDensity" jdbcType="DECIMAL" />
+    <result column="ps_densityunit" property="psDensityunit" jdbcType="INTEGER" />
+    <result column="ps_remark" property="psRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ps_id, ps_texture, ps_weight, ps_weightunit, ps_size, ps_sizeunit, ps_dia, ps_diaunit, 
+    ps_density, ps_densityunit, ps_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from i_product_spec
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from i_product_spec
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hero.entity.ProductSpec" >
+    insert into i_product_spec (ps_id, ps_texture, ps_weight, 
+      ps_weightunit, ps_size, ps_sizeunit, 
+      ps_dia, ps_diaunit, ps_density, 
+      ps_densityunit, ps_remark)
+    values (#{psId,jdbcType=INTEGER}, #{psTexture,jdbcType=VARCHAR}, #{psWeight,jdbcType=DECIMAL}, 
+      #{psWeightunit,jdbcType=VARCHAR}, #{psSize,jdbcType=DECIMAL}, #{psSizeunit,jdbcType=VARCHAR}, 
+      #{psDia,jdbcType=DECIMAL}, #{psDiaunit,jdbcType=VARCHAR}, #{psDensity,jdbcType=DECIMAL}, 
+      #{psDensityunit,jdbcType=INTEGER}, #{psRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hero.entity.ProductSpec" >
+    insert into i_product_spec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="psId != null" >
+        ps_id,
+      </if>
+      <if test="psTexture != null" >
+        ps_texture,
+      </if>
+      <if test="psWeight != null" >
+        ps_weight,
+      </if>
+      <if test="psWeightunit != null" >
+        ps_weightunit,
+      </if>
+      <if test="psSize != null" >
+        ps_size,
+      </if>
+      <if test="psSizeunit != null" >
+        ps_sizeunit,
+      </if>
+      <if test="psDia != null" >
+        ps_dia,
+      </if>
+      <if test="psDiaunit != null" >
+        ps_diaunit,
+      </if>
+      <if test="psDensity != null" >
+        ps_density,
+      </if>
+      <if test="psDensityunit != null" >
+        ps_densityunit,
+      </if>
+      <if test="psRemark != null" >
+        ps_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="psId != null" >
+        #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="psTexture != null" >
+        #{psTexture,jdbcType=VARCHAR},
+      </if>
+      <if test="psWeight != null" >
+        #{psWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="psWeightunit != null" >
+        #{psWeightunit,jdbcType=VARCHAR},
+      </if>
+      <if test="psSize != null" >
+        #{psSize,jdbcType=DECIMAL},
+      </if>
+      <if test="psSizeunit != null" >
+        #{psSizeunit,jdbcType=VARCHAR},
+      </if>
+      <if test="psDia != null" >
+        #{psDia,jdbcType=DECIMAL},
+      </if>
+      <if test="psDiaunit != null" >
+        #{psDiaunit,jdbcType=VARCHAR},
+      </if>
+      <if test="psDensity != null" >
+        #{psDensity,jdbcType=DECIMAL},
+      </if>
+      <if test="psDensityunit != null" >
+        #{psDensityunit,jdbcType=INTEGER},
+      </if>
+      <if test="psRemark != null" >
+        #{psRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hero.entity.ProductSpec" >
+    update i_product_spec
+    <set >
+      <if test="psTexture != null" >
+        ps_texture = #{psTexture,jdbcType=VARCHAR},
+      </if>
+      <if test="psWeight != null" >
+        ps_weight = #{psWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="psWeightunit != null" >
+        ps_weightunit = #{psWeightunit,jdbcType=VARCHAR},
+      </if>
+      <if test="psSize != null" >
+        ps_size = #{psSize,jdbcType=DECIMAL},
+      </if>
+      <if test="psSizeunit != null" >
+        ps_sizeunit = #{psSizeunit,jdbcType=VARCHAR},
+      </if>
+      <if test="psDia != null" >
+        ps_dia = #{psDia,jdbcType=DECIMAL},
+      </if>
+      <if test="psDiaunit != null" >
+        ps_diaunit = #{psDiaunit,jdbcType=VARCHAR},
+      </if>
+      <if test="psDensity != null" >
+        ps_density = #{psDensity,jdbcType=DECIMAL},
+      </if>
+      <if test="psDensityunit != null" >
+        ps_densityunit = #{psDensityunit,jdbcType=INTEGER},
+      </if>
+      <if test="psRemark != null" >
+        ps_remark = #{psRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hero.entity.ProductSpec" >
+    update i_product_spec
+    set ps_texture = #{psTexture,jdbcType=VARCHAR},
+      ps_weight = #{psWeight,jdbcType=DECIMAL},
+      ps_weightunit = #{psWeightunit,jdbcType=VARCHAR},
+      ps_size = #{psSize,jdbcType=DECIMAL},
+      ps_sizeunit = #{psSizeunit,jdbcType=VARCHAR},
+      ps_dia = #{psDia,jdbcType=DECIMAL},
+      ps_diaunit = #{psDiaunit,jdbcType=VARCHAR},
+      ps_density = #{psDensity,jdbcType=DECIMAL},
+      ps_densityunit = #{psDensityunit,jdbcType=INTEGER},
+      ps_remark = #{psRemark,jdbcType=VARCHAR}
+    where ps_id = #{psId,jdbcType=INTEGER}
+  </update>
+</mapper>
